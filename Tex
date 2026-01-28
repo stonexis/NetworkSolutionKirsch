@@ -1,0 +1,150 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[cp1251]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english , russian]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsbsy}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{accents}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\graphicspath{ {./imag} } 
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usepackage{bm}
+
+\tikzset{myarr/.style={-{Stealth[length=3pt,width=4pt]},line width=0.6pt}}
+
+% 1) square + single DOWN arrow + large "c"
+\newcommand{\symSq}{%
+  \tikz[baseline=-0.8ex,scale=1]{
+    \draw[line width=0.6pt] (-0.6,-0.6) rectangle (0.6,0.6);
+    \node at (0,0) {\Large $c$};
+    \draw[myarr] (0,-0.6) -- (0,-1.2);
+  }%
+}
+
+\newcommand{\symB}{%
+  \tikz[baseline=-0.8ex,scale=1]{
+    \draw[line width=0.6pt] (-0.6,-0.6) rectangle (0.6,0.6);
+    \node at (0,0) {\Large $b$};
+    \draw[myarr] (0,-0.6) -- (0,-1.2);
+  }%
+}
+
+% 2) circle + TWO DOWN arrows + large "γ×"
+\newcommand{\symGam}{%
+  \tikz[baseline=-0.8ex,scale=1]{
+    \draw[line width=0.6pt] (0,0) circle (0.65);
+    \node at (0,0) {\Large $\times\gamma$};
+    % two downward arrows: one starting above, one at bottom
+    \draw[myarr] (0,1.15) -- (0,0.65);
+    \draw[myarr] (0,-0.65) -- (0,-1.25);
+  }%
+}
+
+\newcommand{\symW}{%
+  \tikz[baseline=-0.8ex,scale=1]{
+    \draw[line width=0.6pt] (0,0) circle (0.65);
+    \node at (0,0) {\Large $\times w$};
+    % two downward arrows: one starting above, one at bottom
+    \draw[myarr] (0,1.15) -- (0,0.65);
+    \draw[myarr] (0,-0.65) -- (0,-1.25);
+  }%
+}
+
+% 3) circle + TWO DOWN arrows + large "θ"
+\newcommand{\symThe}{%
+  \tikz[baseline=-0.8ex,scale=1]{
+    \draw[line width=0.6pt] (0,0) circle (0.65);
+    \node at (0,0) {\Large $\Theta$};
+    \draw[myarr] (0,1.15) -- (0,0.65);
+    \draw[myarr] (0,-0.65) -- (0,-1.25);
+  }%
+}
+
+\newcommand{\symSgn}{%
+  \tikz[baseline=-0.8ex,scale=1]{
+    \draw[line width=0.6pt] (0,0) circle (0.65);
+    \node at (0,0) {\large $sgn()$};
+    \draw[myarr] (0,1.15) -- (0,0.65);
+    \draw[myarr] (0,-0.65) -- (0,-1.25);
+  }%
+}
+
+% 4) upside‐down triangle + THREE DOWN arrows + large "+"
+\newcommand{\symTri}{%
+  \tikz[baseline=-0.8ex,scale=1]{
+    \coordinate (A) at (-0.75,0.65);
+    \coordinate (B) at (0.75,0.65);
+    \coordinate (C) at (0,-0.85);
+    \draw[line width=0.6pt] (A) -- (B) -- (C) -- cycle;
+    \node at (0,0.0) {\Large $\Sigma$};
+    % two inputs: arrows down into A & B
+    \draw[myarr] ($(A)+(0,0.7)$) -- (A);
+    \draw[myarr] ($(B)+(0,0.7)$) -- (B);
+    % one output: arrow down from C
+    \draw[myarr] (C) -- ($(C)+(0,-0.7)$);
+  }%
+}
+
+
+\begin{document}
+
+
+ 
+\begin{titlepage}
+ 
+
+ \begin{center}
+ \large
+ 
+ МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ \\ ИМЕНИ М. В. ЛОМОНОСОВА
+ \vspace{0.25cm}
+ 
+ Механико-математический факультет
+ 
+ Кафедра механики композитов
+ \vfill
+ 
+ 
+ Шелепов Павел Игоревич
+ \vfill
+ 
+ \textsc{Курсовая работа}\\[5mm]
+ 
+ {\Large {«Построение нейросетевой аппроксимации решения задачи Кирша» \bigskip }
+ 
+ (Development of a neural-network-based approximation for Kirsch’s problem) 
+ }
+ \bigskip
+ 
+ 4 курс, группа 425
+ \end{center}
+ \vfill
+ 
+ \newlength{\ML}
+ \settowidth{\ML}{«\underline{\hspace{0.7cm}}» \underline{\hspace{2cm}}}
+ \hfill\begin{minipage}{0.4\textwidth}
+ Руководитель курсовой работы\\
+ \underline{\hspace{2cm}} н.с. А.\,В.~Романов\\
+ «\underline{\hspace{0.7cm}}» \underline{\hspace{2cm}} 2025 г.
+ \end{minipage}%
+ \bigskip
+ 
+ 
+ \begin{center}
+ Москва, 2025 г.
+ \end{center}
+\end{titlepage}
+\newpage
+\tableofcontents
+\newpage
+\begin{center}
+\section*{Введение. Цели и задачи работы.}
+\addcontentsline{toc}{section}{Введение.}
+\end{center}
+
+Решение уравнений теории упругости для конструкционных элементов с локальными стресс-концентраторами традиционно выполняют либо аналитически (для упрощённых моделей) либо численно, методом конечных элементов. Однако аналитические решения, подобно классическому результату Кирша для круглого отверстия, ограничены простыми геометриями, а детальный анализ методом конечных элементов каждой новой конфигурации требует значительного вычислительного времени, что становится критичным при оптимизационных и мультизапусковых задачах современной инженерии.\bigskip
